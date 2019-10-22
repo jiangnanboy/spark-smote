@@ -58,3 +58,22 @@ Synthetic samples are generated in the following way: Take the difference betwee
 ![](https://raw.githubusercontent.com/jiangnanboy/spark-smote/master/6.png) 
 
 In short, the main idea is to form new minority class examples by interpolating between several minority class examples that lie together. In contrast with the common replication techniques (for example random oversampling), in which the decision region usually become more specific, with SMOTE the overfitting problem is somehow avoided by causing the decision boundaries for the minority class to be larger and to spread further into the majority class space, since it provides related minority class samples to learn from. Specifically, selecting a small k-value could also avoid the risk of including some noise in the data.
+
+### (3)usage
+data format:
+	***label index:value index:value ... index:value***
+
+ int[] indices = {1,3,5,6,7,8,9,10,11,12,14,15,16,17,18};
+
+        JavaRDD<Row> javaRDD = dataset.javaRDD()
+                .filter(str -> !StringUtils.isBlank(str))//过滤空行
+                .map(s -> {
+                    String[] str = StringUtils.split(s, "\\s++");
+                    double[] values = new double[indices.length];
+                    for (int p = 1; p < str.length; p++) {
+                        values[p] = Double.parseDouble(str[p].split(":"[1].trim());
+                    }
+                    Vector sparseVec = Vectors.sparse(18, indices, values);//18为向量有维度，indices为向量中非零位置
+                    return RowFactory.create(str[0], sparseVec); //转为Row(label, feature)
+                });
+
