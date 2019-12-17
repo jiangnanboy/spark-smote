@@ -59,7 +59,7 @@ Synthetic samples are generated in the following way: Take the difference betwee
 
 In short, the main idea is to form new minority class examples by interpolating between several minority class examples that lie together. In contrast with the common replication techniques (for example random oversampling), in which the decision region usually become more specific, with SMOTE the overfitting problem is somehow avoided by causing the decision boundaries for the minority class to be larger and to spread further into the majority class space, since it provides related minority class samples to learn from. Specifically, selecting a small k-value could also avoid the risk of including some noise in the data.
 
-### (3)usage
+### (3)How to use?
 data format:
 	***label index:value index:value ... index:value***
 
@@ -73,7 +73,7 @@ data format:
                     for (int p = 1; p < str.length; p++) {
                         values[p] = Double.parseDouble(str[p].split(":"[1].trim());
                     }
-                    Vector sparseVec = Vectors.sparse(18, indices, values);//18为向量有维度，indices为向量中非零位置
+                    Vector sparseVec = Vectors.sparse(18, indices, values);//18为向量总长度，indices为向量中非零位置
                     return RowFactory.create(str[0], sparseVec); //转为Row(label, feature)
                 });
 
